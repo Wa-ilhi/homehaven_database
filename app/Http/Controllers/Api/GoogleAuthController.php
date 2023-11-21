@@ -32,11 +32,11 @@ class GoogleAuthController extends Controller
 
                 Auth::login($new_user);
 
-                return redirect()->intended('/');
+                return redirect()->intended('/dashboard');
             } else {
                 Auth::login($user);
 
-                return redirect()->intended('/');
+                return redirect()->intended('/dashboard');
             }
         } catch (\Throwable $th) {
             dd('Something went wrong ' . $th->getMessage());
@@ -47,6 +47,6 @@ class GoogleAuthController extends Controller
     {
         Auth::logout();
 
-        return redirect('/'); // Redirect to the home page or any desired URL after logout
+        return redirect('/login'); // Redirect to the home page or any desired URL after logout
     }
 }
