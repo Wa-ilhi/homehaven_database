@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_type', function (Blueprint $table) {
-            $table->id('user_type_id');
-            $table->string('user_type');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->default('user');
         });
     }
 
@@ -22,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_type');
+        //
     }
 };
