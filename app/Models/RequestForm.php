@@ -14,14 +14,12 @@ class RequestForm extends Model
         'property_type',
         'house_type',
         'user_id',
-        // 'date',
-        // 'time'
+        'appointment_date',
+        'appointment_time'
     ];
 
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'request_id');
     }
-
-    // Add other relationships and methods as needed
 }

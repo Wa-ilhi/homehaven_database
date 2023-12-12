@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_type_id')->nullable();
-            $table->foreign('user_type_id')->references('user_type_id')->on('user_type');
+            //
         });
     }
 
@@ -22,5 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+            // Drop the column
+            $table->dropColumn('user_type_id');
+        });
     }
 };

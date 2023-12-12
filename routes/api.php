@@ -3,7 +3,10 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\RealEstateController;
+use App\Http\Controllers\Api\RealEstatePropertyController;
 use App\Http\Controllers\Api\RequestFormController;
+use App\Http\Controllers\Api\ReviewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 // public routes
 
 Route::post('/login', [AuthController::class, 'login'])->name('user.login');
-Route::post('/user', [UserController::class, 'store'])->name('user.store');;
+Route::post('/user', [UserController::class, 'store'])->name('user.store');
 
 // private routes
 
@@ -40,11 +43,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::controller(BookingController::class)->group(function () {
-        Route::get('/bookings',             'index');
-        Route::get('/bookings/{id}',        'show');
-        Route::post('/bookings',            'store');
-        Route::put('/bookings/{id}',        'update');
-        Route::delete('/bookings/{id}',     'destroy');
+        Route::get('/bookings',             'index')->name('bookings.index');
+        Route::get('/bookings/{id}',        'show')->name('bookings.show');
+        Route::post('/bookings',            'store')->name('bookings.store');
+        Route::put('/bookings/{id}',        'update')->name('bookings.update');
+        Route::delete('/bookings/{id}',     'destroy')->name('bookings.destroy');
     });
 
     Route::controller(RequestFormController::class)->group(function () {
@@ -54,4 +57,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/request_form/{id}',          'update')->name('request_form.update');
         Route::delete('/request_form/{id}',       'destroy')->name('request_form.destroy');
     });
+
+    Route::post('/real-estate-properties', [RealEstatePropertyController::class, 'store'])->name('real_estate_properties.store');
+    Route::get('/real-estate-properties/{id}', [RealEstatePropertyController::class, 'show'])->name('real_estate_properties.show');
+
+    Route::post('/real-estates', [RealEstateController::class, 'store'])->name('real_estate.store');
+    Route::get('/real-estates/{id}', [RealEstateController::class, 'show'])->name('real_estate.show');
+
+    Route::post('/reviews', [ReviewsController::class, 'store'])->name('review.store');
+    Route::get('/reviews/{id}', [ReviewsController::class, 'show'])->name('review.show');
 });

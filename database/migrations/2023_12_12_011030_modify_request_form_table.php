@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_type_id')->nullable();
-            $table->foreign('user_type_id')->references('user_type_id')->on('user_type');
+        Schema::table('request_form', function (Blueprint $table) {
+
+            $table->time('appointment_time')->now()->format('H:i:s');
+            $table->date('appointment_date')->now()->toDateString();
         });
     }
 
@@ -22,5 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
+        //
     }
 };

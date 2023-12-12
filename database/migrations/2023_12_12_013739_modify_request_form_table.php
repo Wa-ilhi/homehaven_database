@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_type_id')->nullable();
-            $table->foreign('user_type_id')->references('user_type_id')->on('user_type');
-        });
+        DB::table('request_form')->update([
+            'appointment_time' => now()->format('H:i:s'),
+            'appointment_date' => now()->toDateString(),
+        ]);
     }
 
     /**
@@ -22,5 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
+        //
     }
 };

@@ -21,6 +21,8 @@ class RequestFormController extends Controller
             'property_type' => 'required',
             'house_type' => 'required',
             'user_id' => 'required',
+            'appointment_date' => 'required|date',
+            'appointment_time' => 'required|date_format:H:i',
 
         ]);
 
@@ -42,6 +44,7 @@ class RequestFormController extends Controller
             'property_type' => 'required',
             'house_type' => 'required',
             'user_id' => 'required',
+
 
         ]);
 

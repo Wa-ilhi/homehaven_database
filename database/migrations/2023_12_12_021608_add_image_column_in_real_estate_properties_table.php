@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_type_id')->nullable();
-            $table->foreign('user_type_id')->references('user_type_id')->on('user_type');
+        Schema::table('real_estate_properties', function (Blueprint $table) {
+            $table->string('image_path')->nullable()->after('listing_price');
         });
     }
 
@@ -22,5 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('real_estate_properties', function (Blueprint $table) {
+            //
+        });
     }
 };
