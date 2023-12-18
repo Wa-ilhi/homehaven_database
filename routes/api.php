@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\RequestFormController;
 use App\Http\Controllers\Api\ReviewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\RoutePath;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +28,11 @@ Route::post('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
 
 // private routes
-
+// User's API
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    // logout
     Route::get('/logout', [AuthController::class, 'logout']);
-    // users route
+
     Route::controller(UserController::class)->group(function () {
         Route::get('/user',                 'index');
         Route::get('/user/{id}',            'show');
@@ -58,12 +58,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/request_form/{id}',       'destroy')->name('request_form.destroy');
     });
 
-    Route::post('/real-estate-properties', [RealEstatePropertyController::class, 'store'])->name('real_estate_properties.store');
-    Route::get('/real-estate-properties/{id}', [RealEstatePropertyController::class, 'show'])->name('real_estate_properties.show');
-
-    Route::post('/real-estates', [RealEstateController::class, 'store'])->name('real_estate.store');
-    Route::get('/real-estates/{id}', [RealEstateController::class, 'show'])->name('real_estate.show');
 
     Route::post('/reviews', [ReviewsController::class, 'store'])->name('review.store');
     Route::get('/reviews/{id}', [ReviewsController::class, 'show'])->name('review.show');
+
+
+    //Admin's API
+    Route::controller(RealEstatePropertyController::class)->group(function () {
+        Route::post('/real-estate-properties', [RealEstatePropertyController::class, 'store'])->name('real_estate_properties.store');
+        Route::get('/real-estate-properties/{id}', [RealEstatePropertyController::class, 'show'])->name('real_estate_properties.show');
+        Route::put('/real-estate-properties/{id}', [RealEstatePropertyController::class, 'update'])->name('real_estate_properties.update');
+        Route::delete('/real-estate-properties/{id}', [RealEstatePropertyController::class, 'destroy'])->name('real_estate_properties.destroy');
+    });
+
+    Route::controller(RealEstateController::class)->group(function () {
+        Route::post('/real-estates', [RealEstateController::class, 'store'])->name('real_estate.store');
+        Route::get('/real-estates/{id}', [RealEstateController::class, 'show'])->name('real_estate.show');
+        Route::put('/real-estates/{id}', [RealEstateController::class, 'update'])->name('real_estate.update');
+        Route::delete('/real-estates/{id}', [RealEstateController::class, 'destroy'])->name('real_estate.destroy');
+    });
 });

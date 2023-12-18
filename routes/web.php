@@ -20,16 +20,16 @@ Route::get('/', function () {
 });
 
 
-Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('login.google');
-Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
-Route::get('logout', [GoogleAuthController::class, 'logout']);
+// Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('login.google');
+// Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
+// Route::get('logout', [GoogleAuthController::class, 'logout']);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });

@@ -26,7 +26,7 @@ class ReviewsController extends Controller
 
     public function show($id)
     {
-        // Retrieve a review by ID
+
         $review = Reviews::findOrFail($id);
 
         return $review;

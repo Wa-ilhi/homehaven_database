@@ -51,7 +51,6 @@ class BookingController extends Controller
         $booking->update($request->all());
 
         return $booking;
-        //return redirect()->route('bookings.index')->with('success', 'Booking updated successfully');
     }
 
     public function destroy($id)
@@ -60,6 +59,5 @@ class BookingController extends Controller
         $booking->delete();
 
         return $booking;
-        //return redirect()->route('bookings.index')->with('success', 'Booking deleted successfully');
     }
 }

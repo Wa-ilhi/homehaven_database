@@ -32,7 +32,6 @@ class RealEstatePropertyController extends Controller
         $property = RealEstateProperty::create($request->all());
 
         return $property;
-        //return response()->json(['property' => $property], 201);
     }
 
     public function show($id)
@@ -40,6 +39,39 @@ class RealEstatePropertyController extends Controller
         $realEstateProperty = RealEstateProperty::findOrFail($id);
 
         return $realEstateProperty;
-        //return view('real_estate_property.show', compact('real_estate_properties'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'real_estate_id' => 'required|exists:real_estate,real_estate_id',
+            'property_type' => 'required|string',
+            'address' => 'required|string',
+            'bedrooms' => 'required|integer',
+            'status' => 'required|string',
+            'bathrooms' => 'required|integer',
+            'squarefootage' => 'required|integer',
+            'image' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'listing_price' => [
+                'required',
+                'numeric',
+                'regex:/^\d+(\.\d{1,2})?$/',
+            ],
+
+        ]);
+
+        $realEstateProperty = RealEstateProperty::findOrFail($id);
+
+        $realEstateProperty->update($request->all());
+
+        return $realEstateProperty;
+    }
+
+    public function destroy($id)
+    {
+        $realEstateProperty = RealEstateProperty::findOrFail($id);
+        $realEstateProperty->delete();
+
+        return $realEstateProperty;
     }
 }

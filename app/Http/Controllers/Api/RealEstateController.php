@@ -22,8 +22,6 @@ class RealEstateController extends Controller
         $realEstate = RealEstate::create($request->all());
 
         return $realEstate;
-
-        //return response()->json(['real_estate' => $realEstate], 201);
     }
 
     public function show($id)
@@ -31,7 +29,29 @@ class RealEstateController extends Controller
         $realEstate = RealEstate::findOrFail($id);
 
         return $realEstate;
+    }
 
-        //return view('real_estate.show', compact('real_estate'));
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'type' => 'string',
+            'property_id' => 'exists:real_estate_properties,property_id',
+            'city' => 'string',
+            'zipcode' => 'string',
+        ]);
+
+        $realEstate = RealEstate::findOrFail($id);
+
+        $realEstate->update($request->all());
+
+        return $realEstate;
+    }
+
+    public function destroy($id)
+    {
+        $realEstate = RealEstate::findOrFail($id);
+        $realEstate->delete();
+
+        return $realEstate;
     }
 }
