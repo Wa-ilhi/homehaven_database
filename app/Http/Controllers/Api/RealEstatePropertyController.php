@@ -11,24 +11,6 @@ class RealEstatePropertyController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'real_estate_id' => 'required|exists:real_estate,real_estate_id',
-            'property_type' => 'required|string',
-            'address' => 'required|string',
-            'bedrooms' => 'required|integer',
-            'status' => 'required|string',
-            'bathrooms' => 'required|integer',
-            'squarefootage' => 'required|integer',
-            'image' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'listing_price' => [
-                'required',
-                'numeric',
-                'regex:/^\d+(\.\d{1,2})?$/',
-            ],
-
-        ]);
-
-
         $property = RealEstateProperty::create($request->all());
 
         return $property;
@@ -41,24 +23,25 @@ class RealEstatePropertyController extends Controller
         return $realEstateProperty;
     }
 
+    public function index(Request $request)
+    {
+        $query = RealEstateProperty::query();
+
+
+        if ($request->keyword) {
+            $query->where(function ($query) use ($request) {
+                $query->where('property_type', 'like', '%' . $request->input('keyword') . '%')
+                    ->orWhere('address', 'like', '%' . $request->input('keyword') . '%');
+            });
+        }
+
+        $results = $query->get();
+
+        return $results;
+    }
+
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'real_estate_id' => 'required|exists:real_estate,real_estate_id',
-            'property_type' => 'required|string',
-            'address' => 'required|string',
-            'bedrooms' => 'required|integer',
-            'status' => 'required|string',
-            'bathrooms' => 'required|integer',
-            'squarefootage' => 'required|integer',
-            'image' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'listing_price' => [
-                'required',
-                'numeric',
-                'regex:/^\d+(\.\d{1,2})?$/',
-            ],
-
-        ]);
 
         $realEstateProperty = RealEstateProperty::findOrFail($id);
 

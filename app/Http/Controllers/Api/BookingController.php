@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
 use App\Models\RealEstateProperty;
 use App\Models\RequestForm;
@@ -16,17 +17,12 @@ class BookingController extends Controller
         return $bookings;
     }
 
-    public function store(Request $request)
+    public function store(BookingRequest $request)
     {
-        $request->validate([
-            'property_id' => 'required|exists:real_estate_properties,property_id',
-            'request_id' => 'required|exists:request_form,request_id',
-            'status' => 'required',
-        ]);
 
-        Booking::create($request->all());
+        $booking = Booking::create($request->all());
 
-        return redirect()->route('bookings.index')->with('success', 'Booking created successfully');
+        return $booking;
     }
 
     public function show($id)
@@ -34,18 +30,12 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
 
         return $booking;
-        //return view('bookings.show', compact('booking'));
     }
 
 
 
-    public function update(Request $request, $id)
+    public function update(BookingRequest $request, $id)
     {
-        $request->validate([
-            'property_id' => 'required|exists:real_estate_properties,property_id',
-            'request_id' => 'required|exists:request_form,request_id',
-            'status' => 'required',
-        ]);
 
         $booking = Booking::findOrFail($id);
         $booking->update($request->all());

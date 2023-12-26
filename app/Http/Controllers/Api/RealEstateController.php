@@ -3,21 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RealEstateRequest;
 use App\Models\RealEstate;
 use Illuminate\Http\Request;
 
 class RealEstateController extends Controller
 {
-    public function store(Request $request)
+    public function store(RealEstateRequest $request)
     {
-
-        $request->validate([
-            'type' => 'required|string',
-            'property_id' => 'required|exists:real_estate_properties,property_id',
-            'city' => 'required|string',
-            'zipcode' => 'required|string',
-        ]);
-
 
         $realEstate = RealEstate::create($request->all());
 
@@ -31,14 +24,9 @@ class RealEstateController extends Controller
         return $realEstate;
     }
 
-    public function update(Request $request, $id)
+    public function update(RealEstateRequest $request, $id)
     {
-        $request->validate([
-            'type' => 'string',
-            'property_id' => 'exists:real_estate_properties,property_id',
-            'city' => 'string',
-            'zipcode' => 'string',
-        ]);
+
 
         $realEstate = RealEstate::findOrFail($id);
 

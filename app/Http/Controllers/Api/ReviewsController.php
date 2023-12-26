@@ -11,14 +11,6 @@ class ReviewsController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'property_id' => 'required|exists:real_estate_properties,property_id',
-            'comment' => 'required|nullable|string',
-
-        ]);
-
-
         $review = Reviews::create($request->all());
 
         return $review;

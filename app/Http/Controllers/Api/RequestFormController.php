@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RequestFormRequest;
 use App\Models\RequestForm;
 use Illuminate\Http\Request;
 
@@ -15,16 +16,9 @@ class RequestFormController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(RequestFormRequest $request)
     {
-        $request->validate([
-            'property_type' => 'required',
-            'house_type' => 'required',
-            'user_id' => 'required',
-            'appointment_date' => 'required|date',
-            'appointment_time' => 'required|date_format:H:i',
 
-        ]);
 
         RequestForm::create($request->all());
 
@@ -40,13 +34,6 @@ class RequestFormController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'property_type' => 'required',
-            'house_type' => 'required',
-            'user_id' => 'required',
-
-
-        ]);
 
         $requestForm = RequestForm::findOrFail($id);
         $requestForm->update($request->all());
