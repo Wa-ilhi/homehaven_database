@@ -20,7 +20,7 @@ class RealEstateProperty extends Model
         'listing_price',
         'status',
         'real_estate_id',
-        'image',
+        'image_path',
     ];
 
     public function realEstate()
