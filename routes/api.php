@@ -69,6 +69,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/real-estate-properties/{id}', [RealEstatePropertyController::class, 'show'])->name('real_estate_properties.show');
         Route::put('/real-estate-properties/{id}', [RealEstatePropertyController::class, 'update'])->name('real_estate_properties.update');
         Route::delete('/real-estate-properties/{id}', [RealEstatePropertyController::class, 'destroy'])->name('real_estate_properties.destroy');
+        Route::get('/real-estate-properties', [RealEstatePropertyController::class, 'index'])->name('real_estate_properties.index');
     });
 
     Route::controller(RealEstateController::class)->group(function () {
