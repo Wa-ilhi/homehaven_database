@@ -15,11 +15,19 @@ class RequestForm extends Model
         'house_type',
         'user_id',
         'appointment_date',
-        'appointment_time'
+        'appointment_time',
+        'manager_response',
+        'status'
     ];
 
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'request_id');
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

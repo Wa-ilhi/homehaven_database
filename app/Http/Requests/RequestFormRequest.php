@@ -27,6 +27,8 @@ class RequestFormRequest extends FormRequest
             'user_id' => 'required',
             'appointment_date' => 'required|date',
             'appointment_time' => 'required|date_format:H:i',
+            'status' => 'nullable|string'
+
 
         ];
     }
