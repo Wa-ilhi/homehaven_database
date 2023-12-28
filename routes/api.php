@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\ManagerController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RealEstateController;
 use App\Http\Controllers\Api\RealEstatePropertyController;
 use App\Http\Controllers\Api\RequestFormController;
@@ -42,6 +44,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/user/{id}',         'destroy');
     });
 
+    Route::get('/profile/show',         [ProfileController::class, 'show']);
+
     Route::controller(BookingController::class)->group(function () {
         Route::get('/bookings',             'index')->name('bookings.index');
         Route::get('/bookings/{id}',        'show')->name('bookings.show');
@@ -78,4 +82,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/real-estates/{id}', [RealEstateController::class, 'update'])->name('real_estate.update');
         Route::delete('/real-estates/{id}', [RealEstateController::class, 'destroy'])->name('real_estate.destroy');
     });
+
+    Route::get('/manager/requests', [ManagerController::class, 'getRequestsForManager'])->name('request_form.getRequestsForManager');
+    Route::post('/manager/receive-request', [ManagerController::class, 'receiveRequest']);
 });
