@@ -11,7 +11,7 @@ class RequestFormController extends Controller
 {
     public function index()
     {
-        $requestForm = RequestForm::all();
+        $requestForm = RequestForm::with('user')->get();
         return $requestForm;
     }
 
@@ -19,10 +19,15 @@ class RequestFormController extends Controller
     public function store(RequestFormRequest $request)
     {
 
+        // Get the authenticated user
+        $user = auth()->user();
 
-        RequestForm::create($request->all());
+        // Create the request form with the user association
+        $requestForm = new RequestForm($request->all());
+        $requestForm->user()->associate($user);
+        $requestForm->save();
 
-        return $request;
+        return $requestForm;
     }
 
     public function show(string $id)
